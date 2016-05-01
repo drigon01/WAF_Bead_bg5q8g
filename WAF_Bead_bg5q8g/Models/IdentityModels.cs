@@ -21,7 +21,7 @@ namespace WAF_Bead_bg5q8g.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("News_PortalEntities", throwIfV1Schema: false)
         {
         }
 
