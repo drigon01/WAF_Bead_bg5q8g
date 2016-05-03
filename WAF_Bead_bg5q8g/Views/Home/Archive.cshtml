@@ -1,7 +1,30 @@
-﻿@{
-    ViewBag.Title = "Archive";
+﻿@using Service.Models
+
+@{
+  ViewBag.Title = "Archive";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<p>content to browse come here</p>
+@model IList<Article>
+@if (Model == null || Model.Count() == 0)
+{
+  <p>No archived article to show yet.</p>
+}
+else
+{
+  <div class="row">
+    @for (var wIndex = 0; wIndex < Model.Count && wIndex < 20; wIndex++)
+    {
+      <div class="col-md-4">
+        <h2>
+          @Html.ActionLink(Model[wIndex].Title, "Article", new { articleId = Model[wIndex].Id })
+        </h2>
+        <h3>@Model[wIndex].Summary</h3>
+        <div>
+          <img src="@Url.Action("ArticleImage", new { articleId = Model[wIndex].Id })" border="0" class="img-thumbnail" />
+        </div>
+      </div>
+    }
+  </div>
+}

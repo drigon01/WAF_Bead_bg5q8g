@@ -11,9 +11,14 @@
 }
 else
 {
+  var wLead = @Model.Where(article => (bool)article.IsLead).FirstOrDefault();
   <div class="jumbotron">
-    <h1>TSZH News Portal</h1>
-    <p class="lead">Lead cikk helye </p>
+    <h1>@Html.ActionLink(wLead.Title, "Article", new { articleId = wLead.Id })</h1>
+    <h2>@wLead.Summary</h2>
+    <p class="lead">@wLead.Content</p>
+    <div>
+      <img src="@Url.Action("ArticleImage", new { articleId = wLead.Id })" border="0" class="img-thumbnail" />
+    </div>
   </div>
   <div class="row">
     @for (var wIndex = 0; wIndex < Model.Count && wIndex < 10; wIndex++)
@@ -24,7 +29,7 @@ else
         </h2>
         <h3>@Model[wIndex].Summary</h3>
         <div>
-          <img src="@Url.Action("ArticelImage", new { articleId = Model[wIndex].Id })" border="0" class="contentImage" />
+          <img src="@Url.Action("ArticleImage", new { articleId = Model[wIndex].Id })" border="0" class="img-thumbnail" />
         </div>
       </div>
     }
