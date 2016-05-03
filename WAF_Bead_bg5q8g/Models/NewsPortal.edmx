@@ -8,13 +8,13 @@
   <EntityContainer Name="News_PortalModelStoreContainer">
     <EntitySet Name="Articles" EntityType="News_PortalModel.Store.Articles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Images" EntityType="News_PortalModel.Store.Images" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Users" EntityType="News_PortalModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Accounts" EntityType="News_PortalModel.Store.Accounts" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="ArticleImage" Association="News_PortalModel.Store.ArticleImage">
       <End Role="Article" EntitySet="Articles" />
       <End Role="Image" EntitySet="Images" />
     </AssociationSet>
     <AssociationSet Name="UserArticle" Association="News_PortalModel.Store.UserArticle">
-      <End Role="User" EntitySet="Users" />
+      <End Role="User" EntitySet="Accounts" />
       <End Role="Article" EntitySet="Articles" />
     </AssociationSet>
   </EntityContainer>
@@ -40,7 +40,7 @@
     <Property Name="Image1" Type="varbinary(max)" Nullable="false" />
     <Property Name="Article_Id" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
-  <EntityType Name="Users">
+  <EntityType Name="Accounts">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -61,7 +61,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="UserArticle">
-    <End Role="User" Type="News_PortalModel.Store.Users" Multiplicity="1" />
+    <End Role="User" Type="News_PortalModel.Store.Accounts" Multiplicity="1" />
     <End Role="Article" Type="News_PortalModel.Store.Articles" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
@@ -88,7 +88,7 @@
           <Property Name="Content" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
           <Property Name="IsLead" Type="Boolean" />
           <NavigationProperty Name="Images" Relationship="News_PortalModel.ArticleImage" FromRole="Article" ToRole="Image" />
-          <NavigationProperty Name="User" Relationship="News_PortalModel.UserArticle" FromRole="Article" ToRole="User" />
+          <NavigationProperty Name="Accounts" Relationship="News_PortalModel.UserArticle" FromRole="Article" ToRole="User" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="Image">
@@ -100,7 +100,7 @@
           <Property Name="Image1" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <NavigationProperty Name="Article" Relationship="News_PortalModel.ArticleImage" FromRole="Image" ToRole="Article" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="Account">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -112,13 +112,13 @@
         <EntityContainer Name="News_PortalEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Articles" EntityType="Self.Article" />
           <EntitySet Name="Images" EntityType="Self.Image" />
-          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Accounts" EntityType="News_PortalModel.Account" />
           <AssociationSet Name="ArticleImage" Association="News_PortalModel.ArticleImage">
             <End Role="Article" EntitySet="Articles" />
             <End Role="Image" EntitySet="Images" />
           </AssociationSet>
           <AssociationSet Name="UserArticle" Association="News_PortalModel.UserArticle">
-            <End Role="User" EntitySet="Users" />
+            <End Role="User" EntitySet="Accounts" />
             <End Role="Article" EntitySet="Articles" />
           </AssociationSet>
         </EntityContainer>
@@ -127,7 +127,7 @@
           <End Type="News_PortalModel.Image" Role="Image" Multiplicity="*" />
         </Association>
         <Association Name="UserArticle">
-          <End Type="News_PortalModel.User" Role="User" Multiplicity="1" />
+          <End Type="News_PortalModel.Account" Role="User" Multiplicity="1" />
           <End Type="News_PortalModel.Article" Role="Article" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -167,9 +167,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="IsTypeOf(News_PortalModel.User)">
-        <MappingFragment StoreEntitySet="Users">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="IsTypeOf(News_PortalModel.Account)">
+        <MappingFragment StoreEntitySet="Accounts">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="password" ColumnName="password" />

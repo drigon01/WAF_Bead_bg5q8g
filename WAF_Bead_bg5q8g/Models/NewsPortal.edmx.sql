@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/01/2016 22:38:39
+-- Date Created: 05/03/2016 17:35:22
 -- Generated from EDMX file: D:\shared\waf\WAF_Bead_bg5q8g\WAF_Bead_bg5q8g\Models\NewsPortal.edmx
 -- --------------------------------------------------
 
@@ -19,6 +19,9 @@ GO
 
 IF OBJECT_ID(N'[dbo].[FK_ArticleImage]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Images] DROP CONSTRAINT [FK_ArticleImage];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserArticle]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Articles] DROP CONSTRAINT [FK_UserArticle];
 GO
 
 -- --------------------------------------------------
@@ -61,8 +64,8 @@ CREATE TABLE [dbo].[Images] (
 );
 GO
 
--- Creating table 'Users'
-CREATE TABLE [dbo].[Users] (
+-- Creating table 'Accounts'
+CREATE TABLE [dbo].[Accounts] (
     [Id] uniqueidentifier  NOT NULL,
     [name] nchar(50)  NULL,
     [password] nchar(12)  NULL
@@ -85,9 +88,9 @@ ADD CONSTRAINT [PK_Images]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'Users'
-ALTER TABLE [dbo].[Users]
-ADD CONSTRAINT [PK_Users]
+-- Creating primary key on [Id] in table 'Accounts'
+ALTER TABLE [dbo].[Accounts]
+ADD CONSTRAINT [PK_Accounts]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -114,7 +117,7 @@ GO
 ALTER TABLE [dbo].[Articles]
 ADD CONSTRAINT [FK_UserArticle]
     FOREIGN KEY ([UserId])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[Accounts]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO

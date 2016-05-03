@@ -12,10 +12,10 @@ namespace Service.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Account
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Account()
         {
             this.Articles = new HashSet<Article>();
         }

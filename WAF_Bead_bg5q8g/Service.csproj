@@ -197,6 +197,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Models\Account.cs">
+      <DependentUpon>NewsPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AdministratorContext.cs" />
     <Compile Include="Models\Article.cs">
       <DependentUpon>NewsPortal.tt</DependentUpon>
@@ -230,9 +233,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Models\User.cs">
-      <DependentUpon>NewsPortal.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
