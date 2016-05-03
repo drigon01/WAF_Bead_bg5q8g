@@ -17,7 +17,7 @@ else
     <h2>@wLead.Summary</h2>
     <p class="lead">@wLead.Content</p>
     <div>
-      <img src="@Url.Action("ArticleImage", new { articleId = wLead.Id })" border="0" class="img-thumbnail" />
+      <img src="@Url.Action("ArticleImage", new { Id = wLead.Id })" border="0" class="img-thumbnail" />
     </div>
   </div>
   <div class="row">
@@ -29,7 +29,7 @@ else
         </h2>
         <h3>@Model[wIndex].Summary</h3>
         <div>
-          <img src="@Url.Action("ArticleImage", new { articleId = Model[wIndex].Id })" border="0" class="img-thumbnail" />
+          <img src="@Url.Action("ArticleImage", new { Id = Model[wIndex].Id })" border="0" class="img-thumbnail" />
         </div>
       </div>
     }

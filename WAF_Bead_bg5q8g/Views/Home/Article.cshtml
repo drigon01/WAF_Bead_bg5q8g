@@ -21,11 +21,14 @@
       <strong>Images</strong><br />
       @foreach (Guid id in ViewBag.Images) // a képek azonosítóit a nézet adataihoz töltöttük be
       {
-        <a href="@Url.Action("Image", new { imageId = id, large = true })" target="_blank">
+        <a href="@Url.Action("ArticleImage", new { Id = id})" target="_blank">
           @* képként betöltjük a kis méretű képet, a nagy méretűre pedig elhelyezünk egy hivatkozást *@
-          <img src="@Url.Action("Image", new { imageId = id })" class="img-thumbnail" />
+          <img src="@Url.Action("ArticleImage", new { Id = id })" class="img-thumbnail" />
         </a>
+
       }
     </div>
   }
 </div>
+
+<cite>~ Edited: @Model.Date.Value.ToLongTimeString()  Author: @(string.IsNullOrWhiteSpace(@Model.Accounts.name) ? "Unkown" : @Model.Accounts.name) ~</cite>
