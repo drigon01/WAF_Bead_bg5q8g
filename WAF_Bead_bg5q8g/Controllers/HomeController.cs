@@ -36,11 +36,27 @@ namespace WAF_Bead_bg5q8g.Controllers
       return View();
     }
 
+
     public ActionResult Article(Guid articleId)
     {
       var wArticle = mEntities.Articles.Where(article => article.Id == articleId).FirstOrDefault();
       ViewBag.Images = mEntities.Images.Where(image => image.News_Id == articleId).Select(image => image.Id).ToList();
       return View("Article", wArticle);
+    }
+
+    [HttpPost]
+    public ActionResult Results(string searchText)
+    {
+      var wList = new List<Article>();
+
+      wList.AddRange(mEntities.Articles.Where(article => article.Accounts.name == searchText).ToList());
+      wList.AddRange(mEntities.Articles.Where(article => article.Title.Contains(searchText)).ToList());
+      wList.AddRange(mEntities.Articles.Where(article => article.Content.Contains(searchText)).ToList());
+
+      return View("Index", wList);
+
+      return View(wList);
+
     }
 
     /// <summary>
