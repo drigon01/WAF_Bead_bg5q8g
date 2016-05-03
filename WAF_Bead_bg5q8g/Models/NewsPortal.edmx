@@ -24,9 +24,8 @@
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Title" Type="nchar" Nullable="true" MaxLength="20" />
-    <Property Name="Author" Type="uniqueidentifier" Nullable="true" />
-    <Property Name="Date" Type="binary" StoreGeneratedPattern="Computed" Nullable="true" MaxLength="8" />
-    <Property Name="Summary" Type="nchar" Nullable="true" MaxLength="30" />
+    <Property Name="Date" Type="datetime" StoreGeneratedPattern="Computed" Nullable="true" />
+    <Property Name="Summary" Type="nchar" Nullable="true" MaxLength="100" />
     <Property Name="Content" Type="nchar" Nullable="true" MaxLength="500" />
     <Property Name="IsLead" Type="bit" Nullable="true" />
     <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
@@ -82,9 +81,8 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="Author" Type="Guid" />
-          <Property Name="Date" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="Summary" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Date" Type="DateTime" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <Property Name="Summary" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="Content" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
           <Property Name="IsLead" Type="Boolean" />
           <NavigationProperty Name="Images" Relationship="News_PortalModel.ArticleImage" FromRole="Article" ToRole="Image" />
@@ -149,7 +147,6 @@
         <MappingFragment StoreEntitySet="Articles">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="Author" ColumnName="Author" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="Summary" ColumnName="Summary" />
           <ScalarProperty Name="Content" ColumnName="Content" />

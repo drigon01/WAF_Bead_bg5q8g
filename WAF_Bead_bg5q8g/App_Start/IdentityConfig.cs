@@ -53,11 +53,11 @@ namespace WAF_Bead_bg5q8g
       // Configure validation logic for passwords
       manager.PasswordValidator = new PasswordValidator
       {
-        RequiredLength = 6,
-        RequireNonLetterOrDigit = true,
+        RequiredLength = 2,
+        RequireNonLetterOrDigit = false,
         RequireDigit = true,
-        RequireLowercase = true,
-        RequireUppercase = true,
+        RequireLowercase = false,
+        RequireUppercase = false,
       };
 
       // Configure user lockout defaults

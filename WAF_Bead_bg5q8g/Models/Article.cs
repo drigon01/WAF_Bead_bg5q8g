@@ -22,8 +22,7 @@ namespace Service.Models
     
         public System.Guid Id { get; set; }
         public string Title { get; set; }
-        public Nullable<System.Guid> Author { get; set; }
-        public byte[] Date { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
         public string Summary { get; set; }
         public string Content { get; set; }
         public Nullable<bool> IsLead { get; set; }

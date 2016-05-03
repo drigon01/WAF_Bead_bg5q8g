@@ -7,7 +7,7 @@
       <Diagram DiagramId="9879debc67f54070a036b39a481fbc69" Name="Diagram1">
         <EntityTypeShape EntityType="News_PortalModel.Article" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="News_PortalModel.Image" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="News_PortalModel.Account" Width="1.5" PointX="2.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="News_PortalModel.Account" Width="1.5" PointX="2.625" PointY="4.25" IsExpanded="true" />
         <AssociationConnector Association="News_PortalModel.ArticleImage" />
         <AssociationConnector Association="News_PortalModel.UserArticle" />
       </Diagram>

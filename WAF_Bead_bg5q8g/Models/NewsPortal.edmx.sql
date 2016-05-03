@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/03/2016 17:35:22
+-- Date Created: 05/03/2016 19:54:55
 -- Generated from EDMX file: D:\shared\waf\WAF_Bead_bg5q8g\WAF_Bead_bg5q8g\Models\NewsPortal.edmx
 -- --------------------------------------------------
 
@@ -28,14 +28,14 @@ GO
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Accounts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Accounts];
+GO
 IF OBJECT_ID(N'[dbo].[Articles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Articles];
 GO
 IF OBJECT_ID(N'[dbo].[Images]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Images];
-GO
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
 GO
 
 -- --------------------------------------------------
@@ -46,9 +46,8 @@ GO
 CREATE TABLE [dbo].[Articles] (
     [Id] uniqueidentifier  NOT NULL,
     [Title] nchar(20)  NULL,
-    [Author] uniqueidentifier  NULL,
-    [Date] binary(8)  NULL,
-    [Summary] nchar(30)  NULL,
+    [Date] datetime  NULL,
+    [Summary] nchar(100)  NULL,
     [Content] nchar(500)  NULL,
     [IsLead] bit  NULL,
     [UserId] uniqueidentifier  NOT NULL
