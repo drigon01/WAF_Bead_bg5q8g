@@ -14,17 +14,15 @@
 else
 {
   <div class="row">
-    @for (var wIndex = 0; wIndex < Model.Count && wIndex < 20; wIndex++)
+    @for (var wIndex = 0; wIndex < Model.Count; wIndex++)
     {
       <div class="col-md-4">
         <h2>
           @Html.ActionLink(Model[wIndex].Title, "Article", new { articleId = Model[wIndex].Id })
         </h2>
         <h3>@Model[wIndex].Summary</h3>
-        <div>
-          <img src="@Url.Action("ArticleImage", new { Id = Model[wIndex].Id })" border="0" class="img-thumbnail" />
-        </div>
       </div>
     }
   </div>
-}
+  <p>@Html.ActionLink("Next", "Next")</p>
+ }

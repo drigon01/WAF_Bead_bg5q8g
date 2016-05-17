@@ -12,6 +12,8 @@ namespace WAF_Bead_bg5q8g.Controllers
   public class HomeController : Controller
   {
     private News_PortalEntities mEntities;
+    private int mArchiveStart = 0;
+
 
     public HomeController()
     {
@@ -21,13 +23,29 @@ namespace WAF_Bead_bg5q8g.Controllers
 
     public ActionResult Index()
     {
+      ViewBag.Lead = mEntities.Articles.Where(article => (bool)article.IsLead).FirstOrDefault();
       return View("Index", mEntities.Articles.OrderBy(article => article.Date).Take(10).ToList());
     }
 
     public ActionResult Archive()
     {
+      mArchiveStart = 0;
       ViewBag.Message = "Here You may Browse the archived Articles";
       return View("Archive", mEntities.Articles.OrderBy(article => article.Date).Skip(10).ToList());
+    }
+
+    public ActionResult Next()
+    {
+      mArchiveStart += 20;
+      ViewBag.Message = "Here You may Browse the archived Articles";
+      return View("Archive", mEntities.Articles.OrderBy(article => article.Date).Skip(10 + mArchiveStart).Take(20));
+    }
+
+    public ActionResult Previous()
+    {
+      mArchiveStart = mArchiveStart - 20 < 10 ? 0 : mArchiveStart - 20;
+      ViewBag.Message = "Here You may Browse the archived Articles";
+      return View("Archive", mEntities.Articles.OrderBy(article => article.Date).Skip(10 + mArchiveStart).ToList());
     }
 
     public ActionResult Contact()
@@ -36,13 +54,19 @@ namespace WAF_Bead_bg5q8g.Controllers
       return View();
     }
 
-
     public ActionResult Article(Guid articleId)
     {
       var wArticle = mEntities.Articles.Where(article => article.Id == articleId).FirstOrDefault();
       ViewBag.Images = mEntities.Images.Where(image => image.News_Id == articleId).Select(image => image.Id).ToList();
       return View("Article", wArticle);
     }
+
+    public ActionResult Galery(Guid articleId)
+    {
+      var wIamges = mEntities.Images.Where(image => image.News_Id == articleId).ToList();
+      return View("Galery", wIamges);
+    }
+
 
     [HttpPost]
     public ActionResult Results(string searchText)
@@ -54,9 +78,6 @@ namespace WAF_Bead_bg5q8g.Controllers
       wList.AddRange(mEntities.Articles.Where(article => article.Content.Contains(searchText)).ToList());
 
       return View("Index", wList);
-
-      return View(wList);
-
     }
 
     /// <summary>
