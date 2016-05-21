@@ -1,8 +1,30 @@
-﻿
+﻿@using Service.Models
+
 @{
-    ViewBag.Title = "Galery";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+  ViewBag.Title = "Galery";
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@model Image
+
 
 <h2>Galery</h2>
 
+<div>
+  @if (Model != null)
+  {
+    <div class="jumbotron">
+      <strong>Images:</strong><br />
+
+      <img src="@Model.Image1" />
+
+    </div>
+
+    <div class="col-md-4">
+      @Html.ActionLink("Next", "Galery", new { step = 1 });
+
+      @Html.ActionLink("Previous", "Galery", new { step = -1 });
+
+    </div>
+  }
+</div>

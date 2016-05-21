@@ -22,7 +22,7 @@ namespace Admin
     {
         public MainWindow()
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace WAF_Bead_bg5q8g.Controllers
   {
     private News_PortalEntities mEntities;
     private int mArchiveStart = 0;
+    private int mGaleryPosition = 0;
 
 
     public HomeController()
@@ -30,22 +31,19 @@ namespace WAF_Bead_bg5q8g.Controllers
     public ActionResult Archive()
     {
       mArchiveStart = 0;
+      mGaleryPosition = 0;
       ViewBag.Message = "Here You may Browse the archived Articles";
-      return View("Archive", mEntities.Articles.OrderBy(article => article.Date).Skip(10).ToList());
+      var wArchivedArticles = mEntities.Articles.OrderBy(article => article.Date).Skip(10).ToList();
+      ViewBag.ArchiveLength = wArchivedArticles.Count / 20;
+      return View("Archive", wArchivedArticles.Take(20).ToList());
     }
 
-    public ActionResult Next()
+    public ActionResult ArchiveStep(int step)
     {
-      mArchiveStart += 20;
+      mArchiveStart = (step * 20);
+      mGaleryPosition = 0;
       ViewBag.Message = "Here You may Browse the archived Articles";
-      return View("Archive", mEntities.Articles.OrderBy(article => article.Date).Skip(10 + mArchiveStart).Take(20));
-    }
-
-    public ActionResult Previous()
-    {
-      mArchiveStart = mArchiveStart - 20 < 10 ? 0 : mArchiveStart - 20;
-      ViewBag.Message = "Here You may Browse the archived Articles";
-      return View("Archive", mEntities.Articles.OrderBy(article => article.Date).Skip(10 + mArchiveStart).ToList());
+      return View("Archive", mEntities.Articles.OrderBy(article => article.Date).Skip(10 + mArchiveStart).Take(20).ToList());
     }
 
     public ActionResult Contact()
@@ -56,17 +54,20 @@ namespace WAF_Bead_bg5q8g.Controllers
 
     public ActionResult Article(Guid articleId)
     {
+      mGaleryPosition = 0;
       var wArticle = mEntities.Articles.Where(article => article.Id == articleId).FirstOrDefault();
-      ViewBag.Images = mEntities.Images.Where(image => image.News_Id == articleId).Select(image => image.Id).ToList();
+      ViewBag.ArticleImageId = mEntities.Images.Where(image => image.News_Id == articleId).Select(image => image.Id).ToList().FirstOrDefault();
       return View("Article", wArticle);
     }
 
-    public ActionResult Galery(Guid articleId)
+    public ActionResult Galery(Guid articleId, int step)
     {
       var wIamges = mEntities.Images.Where(image => image.News_Id == articleId).ToList();
-      return View("Galery", wIamges);
-    }
 
+      mGaleryPosition += (mGaleryPosition + step) < 0 ? wIamges.Count : step;
+
+      return View("Galery", wIamges[mGaleryPosition]);
+    }
 
     [HttpPost]
     public ActionResult Results(string searchText)
@@ -87,11 +88,11 @@ namespace WAF_Bead_bg5q8g.Controllers
     /// <returns>the image associated with the article, or a default one</returns>
     public FileResult ArticleImage(Guid Id)
     {
-      if (Id == null) { return File("~/Content/missing.jpg", "image/jpg"); }
+      if (Id == null) { return File(Stream.Null, "image/jpg"); }
       Byte[] wImageContent = mEntities.Images.Where(image => image.Id == Id).Select(image => image.Image1).FirstOrDefault();
 
-      if (wImageContent == null) { return File("~/Content/missing.jpg", "image/jpg"); }
-
+      if (wImageContent == null) { return File(Stream.Null, "image/jpg"); }
+      
       return File(wImageContent, "image/jpg");
     }
   }

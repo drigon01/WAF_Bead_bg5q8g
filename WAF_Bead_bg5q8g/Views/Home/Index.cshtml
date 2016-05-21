@@ -12,12 +12,14 @@
 else
 {
   <div class="jumbotron">
-    <h1>@Html.ActionLink((string)ViewBag.Lead.Title, "Article", new { articleId = ViewBag.Lead.Id })</h1>
-    <h2>@ViewBag.Lead.Summary</h2>
-    <p class="lead">@ViewBag.Lead.Content</p>
-    <div>
-      <img src="@Url.Action("ArticleImage", new { Id = ViewBag.Lead.Id })" border="0" class="img-thumbnail" />
-    </div>
+    @if (ViewBag.Lead != null)
+    {
+      <h1>@Html.ActionLink((string)ViewBag.Lead.Title, "Article", new { articleId = ViewBag.Lead.Id })</h1>
+      <h2>@ViewBag.Lead.Summary</h2>
+      <p class="lead">@ViewBag.Lead.Content</p>
+      <div>
+        <img src="@Url.Action("ArticleImage", new { Id = ViewBag.Lead.Id })" border="0" class="img-thumbnail" />
+      </div>}
   </div>
   <div class="row">
     @for (var wIndex = 0; wIndex < Model.Count && wIndex < 10; wIndex++)
@@ -27,9 +29,6 @@ else
           @Html.ActionLink(Model[wIndex].Title, "Article", new { articleId = Model[wIndex].Id })
         </h2>
         <h3>@Model[wIndex].Summary</h3>
-        <div>
-          <img src="@Url.Action("ArticleImage", new { Id = Model[wIndex].Id })" border="0" class="img-thumbnail" />
-        </div>
       </div>
     }
   </div>

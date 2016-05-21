@@ -24,5 +24,10 @@ else
       </div>
     }
   </div>
-  <p>@Html.ActionLink("Next", "Next")</p>
- }
+  <div class="jumbotron">
+    @for (var wIndex = 0; wIndex < ViewBag.ArchiveLength; wIndex++)
+    {
+      @Html.ActionLink((wIndex + 1).ToString(), "ArchiveStep", new { step = wIndex });
+    }
+  </div>
+}
