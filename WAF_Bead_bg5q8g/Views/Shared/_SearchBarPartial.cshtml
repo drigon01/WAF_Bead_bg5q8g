@@ -1,9 +1,9 @@
 ﻿
-<div class="search-bar">
+<div class="navbar-form">
   @using (Html.BeginForm("Results", "Home"))
 {
-  @Html.TextBox("SearchText")
-  <input class="search-button1" type="submit" value="Search" />
+  @Html.TextBox("SearchText","", new { @class = "form-control" })
+  <input type="submit" value="Search" class="btn btn-toolbar"/>
 }
 </div>
 

@@ -1,0 +1,40 @@
+﻿<Window x:Class="Admin.view.ArticleEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Admin.view"
+        mc:Ignorable="d"
+        Title="ArticleEditorWindow" Height="294.529" Width="617.325">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="32" />
+      <RowDefinition Height="32" />
+      <RowDefinition Height="32" />
+      <RowDefinition Height="117" />
+      <RowDefinition Height="46" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="503" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+
+    <StackPanel Grid.Row="0" Orientation="Horizontal">
+      <TextBlock Text="Title:" Margin="5" />
+      <TextBox Width="456" Text="{Binding EditedBuilding.Name}" Margin="5"/>
+    </StackPanel>
+    <StackPanel Grid.Row="1" Orientation="Horizontal">
+      <TextBlock Text="Summary:" Margin="5" />
+      <TextBox Width="429" Text="{Binding EditedBuilding.SeaDistance}" Margin="5"/>
+    </StackPanel>
+    <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2"/>
+    <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="0,5,0,28">
+      <CheckBox x:Name="IsLead" Content="IsLead?" Width="111" Margin="0,0,0,141"/>
+    </StackPanel>
+    <StackPanel Grid.Row="4" Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="217">
+      <Button Content="Mégse" Margin="5,5,6,5" Command="{Binding CancelChangesCommand}" Width="100" />
+      <Button Content="Mentés" Margin="6,5,0,5" Command="{Binding SaveChangesCommand}" Width="100" />
+    </StackPanel>
+    <TextBlock x:Name="ArticleContent" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="3" TextWrapping="Wrap" Text="type the article here" VerticalAlignment="Top" Height="108" Width="493" Background="#FFC3C3C3"/>
+  </Grid>
+</Window>

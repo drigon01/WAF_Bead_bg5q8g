@@ -267,6 +267,7 @@
     <Content Include="Models\NewsPortal.edmx.diagram">
       <DependentUpon>NewsPortal.edmx</DependentUpon>
     </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

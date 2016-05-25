@@ -10,19 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Admin
+namespace Admin.view
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+  /// <summary>
+  /// Interaction logic for LoginWindow.xaml
+  /// </summary>
+  public partial class LoginWindow : Window
+  {
+    public LoginWindow()
     {
-        public MainWindow()
-        {
-            //InitializeComponent();
-        }
+      InitializeComponent();
     }
+  }
 }
