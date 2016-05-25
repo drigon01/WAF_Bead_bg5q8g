@@ -33,7 +33,7 @@
       </MenuItem>
     </Menu>
 
-    <DataGrid Name="buildingGrid" Grid.Row="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}">
+    <DataGrid Name="ArticleGrid" Grid.Row="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}">
       <!-- adatrács, amelynek megadjuk az oszlopait -->
       <DataGrid.Columns>
         <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
@@ -45,11 +45,11 @@
 
     <StackPanel Grid.Row="2" Orientation="Horizontal">
       <Button Content="New" Margin="6,5,0,5" Command="{Binding CreateArticleCommand}" Width="114" IsEnabled="{Binding IsLoaded}" />
-      <Button Content="Update" Margin="6,5,0,5" Command="{Binding UpdateArticleCommand}" CommandParameter="{Binding SelectedBuilding}" Width="114" IsEnabled="{Binding IsLoaded}" />
-      <Button Content="Delete" Margin="6,5,6,5" Command="{Binding DeleteArticleCommand}" CommandParameter="{Binding SelectedBuilding}" Width="114" IsEnabled="{Binding IsLoaded}" />
+      <Button Content="Update" Margin="6,5,0,5" Command="{Binding UpdateArticleCommand}" CommandParameter="{Binding SelectedArticle}" Width="114" IsEnabled="{Binding IsLoaded}" />
+      <Button Content="Delete" Margin="6,5,6,5" Command="{Binding DeleteArticleCommand}" CommandParameter="{Binding SelectedArticle}" Width="114" IsEnabled="{Binding IsLoaded}" />
     </StackPanel>
 
-    <ListBox Grid.Row="3" Grid.ColumnSpan="2" Name="imageListBox" ItemsSource="{Binding ElementName=buildingGrid, Path=SelectedItem.Images}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+    <ListBox Grid.Row="3" Grid.ColumnSpan="2" Name="imageListBox" ItemsSource="{Binding ElementName=ArticleGrid, Path=SelectedItem.Images}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
       <!-- az épülethez tartozó képeket egy listba helyezzük, amely vízszintesen görgethető -->
       <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
@@ -66,7 +66,7 @@
     </ListBox>
 
     <Grid Grid.Row="4" Grid.ColumnSpan="2">
-      <Button Content="Új kép hozzáadása" Margin="6,5,0,5" Command="{Binding CreateImageCommand}" CommandParameter="{Binding SelectedBuilding}" HorizontalAlignment="Left" Width="120" IsEnabled="{Binding IsLoaded}" />
+      <Button Content="Új kép hozzáadása" Margin="6,5,0,5" Command="{Binding CreateImageCommand}" CommandParameter="{Binding SelectedArticle}" HorizontalAlignment="Left" Width="120" IsEnabled="{Binding IsLoaded}" />
     </Grid>
   </Grid>
 </Window>

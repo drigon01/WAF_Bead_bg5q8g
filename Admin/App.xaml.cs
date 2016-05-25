@@ -9,6 +9,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Admin.presistence;
 
 namespace Admin
 {
@@ -32,7 +33,7 @@ namespace Admin
 
     private void App_Startup(object sender, StartupEventArgs e)
     {
-      mModel = new NewsAgencyModel(new TravelAgencyServicePersistence("http://localhost:19243")); // megadjuk a szolgáltatás címét
+      mModel = new NewsAgencyModel(new NewsAgencyPresistance("http://localhost:51827")); // megadjuk a szolgáltatás címét
 
       mLoginViewModel = new LoginViewModel(mModel);
       mLoginViewModel.ExitApplication += new EventHandler(ViewModel_ExitApplication);
@@ -56,8 +57,8 @@ namespace Admin
     {
       mMainViewModel = new MainViewModel(mModel);
       mMainViewModel.MessageApplication += new EventHandler<MessageEventArgs>(ViewModel_MessageApplication);
-      mMainViewModel.ArticleEditingStarted += new EventHandler(MainViewModel_BuildingEditingStarted);
-      mMainViewModel.ArticleEditingFinished += new EventHandler(MainViewModel_BuildingEditingFinished);
+      mMainViewModel.ArticleEditingStarted += new EventHandler(MainViewModel_ArticleEditingStarted);
+      mMainViewModel.ArticleEditingFinished += new EventHandler(MainViewModel_ArticleEditingFinished);
       mMainViewModel.ImageAttachmentStarted += new EventHandler<ArticleChangeArgs>(MainViewModel_ImageEditingStarted);
       mMainViewModel.ExitApplication += new EventHandler(ViewModel_ExitApplication);
 
@@ -70,22 +71,22 @@ namespace Admin
 
     private void ViewModel_LoginFailed(object sender, EventArgs e)
     {
-      MessageBox.Show("A bejelentkezés sikertelen!", "Utazási ügynökség", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+      MessageBox.Show("A bejelentkezés sikertelen!", "News Agency", MessageBoxButton.OK, MessageBoxImage.Asterisk);
     }
 
     private void ViewModel_MessageApplication(object sender, MessageEventArgs e)
     {
-      MessageBox.Show(e.Message, "Utazási ügynökség", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+      MessageBox.Show(e.Message, "News Agency", MessageBoxButton.OK, MessageBoxImage.Asterisk);
     }
 
-    private void MainViewModel_BuildingEditingStarted(object sender, EventArgs e)
+    private void MainViewModel_ArticleEditingStarted(object sender, EventArgs e)
     {
       mEditorView = new ArticleEditorWindow(); // külön szerkesztő dialógus az épületekre
       mEditorView.DataContext = mMainViewModel;
       mEditorView.Show();
     }
 
-    private void MainViewModel_BuildingEditingFinished(object sender, EventArgs e)
+    private void MainViewModel_ArticleEditingFinished(object sender, EventArgs e)
     {
       mEditorView.Close();
     }

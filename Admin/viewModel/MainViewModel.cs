@@ -133,15 +133,15 @@ namespace Admin.ViewModel
     /// <summary>
     /// Épület törlése.
     /// </summary>
-    /// <param name="building">Az épület.</param>
-    private void DeleteArticle(Article building)
+    /// <param name="Article">Az épület.</param>
+    private void DeleteArticle(Article Article)
     {
-      if (building == null || !Articles.Contains(building))
+      if (Article == null || !Articles.Contains(Article))
         return;
 
-      Articles.Remove(building);
+      Articles.Remove(Article);
 
-      mModel.DeleteArticle(building);
+      mModel.DeleteArticle(Article);
     }
 
     /// <summary>
@@ -216,7 +216,7 @@ namespace Admin.ViewModel
 
     private void Model_ArticleChanged(object sender, ArticleChangeArgs e)
     {
-      Int32 index = Articles.IndexOf(Articles.FirstOrDefault(building => building.Id == e.ArticleId));
+      Int32 index = Articles.IndexOf(Articles.FirstOrDefault(Article => Article.Id == e.ArticleId));
       Articles.RemoveAt(index); // módosítjuk a kollekciót
       Articles.Insert(index, mModel.Articles[index]);
 

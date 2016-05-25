@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Admin.presistence;
 using Service.Models;
 
 namespace Admin.model
 {
   class NewsAgencyModel : INewsAgencyModel
   {
+    private NewsAgencyPresistance newsAgencyPresistance;
+
+    public NewsAgencyModel(NewsAgencyPresistance newsAgencyPresistance)
+    {
+      this.newsAgencyPresistance = newsAgencyPresistance;
+    }
+
     public IList<Article> Articles
     {
       get

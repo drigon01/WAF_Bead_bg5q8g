@@ -34,7 +34,7 @@ namespace Admin.model
     /// <summary>
     /// Kép létrehozása.
     /// </summary>
-    /// <param name="buildingId">Épület azonosító.</param>
+    /// <param name="ArticleId">Épület azonosító.</param>
     /// <param name="image">Kép.</param>
     void CreateImage(Guid article,  Byte[] image);
 
@@ -47,7 +47,7 @@ namespace Admin.model
     /// <summary>
     /// Delete Article.
     /// </summary>
-    /// <param name="building">Az épület.</param>
+    /// <param name="Article">Az épület.</param>
     void DeleteArticle(Article article);
 
     /// <summary>

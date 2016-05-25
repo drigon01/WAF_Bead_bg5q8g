@@ -21,11 +21,11 @@
 
     <StackPanel Grid.Row="0" Orientation="Horizontal">
       <TextBlock Text="Title:" Margin="5" />
-      <TextBox Width="456" Text="{Binding EditedBuilding.Name}" Margin="5"/>
+      <TextBox Width="456" Text="{Binding EditedArticle.Name}" Margin="5"/>
     </StackPanel>
     <StackPanel Grid.Row="1" Orientation="Horizontal">
       <TextBlock Text="Summary:" Margin="5" />
-      <TextBox Width="429" Text="{Binding EditedBuilding.SeaDistance}" Margin="5"/>
+      <TextBox Width="429" Text="{Binding EditedArticle.SeaDistance}" Margin="5"/>
     </StackPanel>
     <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2"/>
     <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="0,5,0,28">

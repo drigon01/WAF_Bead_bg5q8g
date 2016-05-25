@@ -89,6 +89,8 @@
     <Compile Include="model\ArticleChangeArgs.cs" />
     <Compile Include="model\INewsAgencyModel.cs" />
     <Compile Include="model\NewsAgencyModel.cs" />
+    <Compile Include="presistence\INewsAgencyPresistance.cs" />
+    <Compile Include="presistence\NewsAgencyPresistance.cs" />
     <Compile Include="viewModel\converter\ArticleImageConverter.cs" />
     <Compile Include="viewModel\DelegateCommand.cs" />
     <Compile Include="viewModel\ImageHandler.cs" />
