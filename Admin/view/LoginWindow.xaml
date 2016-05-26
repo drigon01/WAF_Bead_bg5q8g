@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Admin.view"
         mc:Ignorable="d"
-        Title="News Agency - Bejelentkezés" Height="145" Width="300" WindowStyle="ToolWindow">
+        Title="News Agency - Bejelentkezés" Height="145" Width="300" WindowStyle="SingleBorderWindow">
   <Window.InputBindings>
     <KeyBinding Key="Enter" Command="{Binding LoginCommand}" />
   </Window.InputBindings>

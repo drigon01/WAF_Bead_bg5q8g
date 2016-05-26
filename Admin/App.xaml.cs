@@ -25,6 +25,7 @@ namespace Admin
     private MainWindow mMainView;
     private ArticleEditorWindow mEditorView;
 
+
     public App()
     {
       Startup += new StartupEventHandler(App_Startup);

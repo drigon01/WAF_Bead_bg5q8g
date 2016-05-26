@@ -1,7 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-//[assembly: OwinStartupAttribute(typeof(WAF_Bead_bg5q8g.Startup))]
+[assembly: OwinStartupAttribute(typeof(WAF_Bead_bg5q8g.Startup))]
 namespace WAF_Bead_bg5q8g
 {
     public partial class Startup

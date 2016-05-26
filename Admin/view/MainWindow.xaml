@@ -26,8 +26,8 @@
 
     <Menu Grid.Row="0" Grid.ColumnSpan="2">
       <MenuItem Header="Adatbázis">
-        <MenuItem Header="Épületek lekérdezése" Command="{Binding LoadCommand}"/>
-        <MenuItem Header="Épületek mentése" Command="{Binding SaveCommand}" IsEnabled="{Binding IsLoaded}"/>
+        <MenuItem Header="Cikkek Lekérdezése" Command="{Binding LoadCommand}"/>
+        <MenuItem Header="Cikkek mentése" Command="{Binding SaveCommand}" IsEnabled="{Binding IsLoaded}"/>
         <Separator />
         <MenuItem Header="Kilépés" Command="{Binding ExitCommand}" />
       </MenuItem>
