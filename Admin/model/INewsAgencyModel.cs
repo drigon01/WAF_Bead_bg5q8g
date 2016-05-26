@@ -13,7 +13,7 @@ namespace Admin.model
     /// <summary>
     /// Querry of Articles
     /// </summary>
-    IList<Article> Articles { get; }
+    IReadOnlyList<Article> Articles { get; }
 
     /// <summary>
     /// Login State.

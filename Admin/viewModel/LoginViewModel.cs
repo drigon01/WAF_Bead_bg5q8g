@@ -67,20 +67,20 @@ namespace Admin.ViewModel
       if (passwordBox == null)
         return;
 
-      //try
-      //{
-      // a bejelentkezéshez szükségünk van a jelszótároló vezérlőre, mivel a jelszó tulajdonság nem köthető
-      Boolean result = await mModel.LoginAsync(UserName, passwordBox.Password);
+      try
+      {
+        // a bejelentkezéshez szükségünk van a jelszótároló vezérlőre, mivel a jelszó tulajdonság nem köthető
+        Boolean result = await mModel.LoginAsync(UserName, passwordBox.Password);
 
-      if (result)
-        OnLoginSuccess();
-      else
-        OnLoginFailed();
-      //}
-      /*catch (PersistenceUnavailableException)
+        if (result)
+          OnLoginSuccess();
+        else
+          OnLoginFailed();
+      }
+      catch (Exception)
       {
         OnMessageApplication("Nincs kapcsolat a kiszolgálóval.");
-      }*/
+      }
     }
 
     /// <summary>

@@ -19,8 +19,6 @@ namespace Admin.presistence
 
     Task<Boolean> CreateArticleImageAsync(Image image);
 
-    Task<Boolean> DeleteArticleImageAsync(Image image);
-
     Task<Boolean> LoginAsync(String userName, String userPassword);
 
     Task<Boolean> LogoutAsync();
