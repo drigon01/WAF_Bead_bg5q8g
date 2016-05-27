@@ -70,7 +70,6 @@ namespace WAF_Bead_bg5q8g.Controllers
     // POST: /Account/Login
     [HttpPost]
     [AllowAnonymous]
-    [ValidateAntiForgeryToken]
     public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
     {
       if (!ModelState.IsValid)
@@ -80,7 +79,7 @@ namespace WAF_Bead_bg5q8g.Controllers
 
       // This doesn't count login failures towards account lockout
       // To enable password failures to trigger account lockout, change to shouldLockout: true
-      var result = await SignInManager.PasswordSignInAsync(model.User, model.Password, model.RememberMe, shouldLockout: true);
+      var result = await SignInManager.PasswordSignInAsync(model.User, model.Password, model.RememberMe, shouldLockout: false);
       switch (result)
       {
         case SignInStatus.Success:
@@ -157,7 +156,7 @@ namespace WAF_Bead_bg5q8g.Controllers
       if (ModelState.IsValid)
       {
         var user = new ApplicationUser { UserName = model.User };
-        var result =  UserManager.Create(user, model.Password);
+        var result = UserManager.Create(user, model.Password);
         if (result.Succeeded)
         {
           await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);

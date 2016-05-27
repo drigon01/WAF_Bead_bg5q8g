@@ -9,27 +9,30 @@
 
 namespace Service.Models
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class Article
+  using Newtonsoft.Json;
+  using System;
+  using System.Collections.Generic;
+
+  public partial class Article
+  {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public Article()
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Article()
-        {
-            this.Images = new HashSet<Image>();
-        }
-    
-        public System.Guid Id { get; set; }
-        public string Title { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public string Summary { get; set; }
-        public string Content { get; set; }
-        public Nullable<bool> IsLead { get; set; }
-        public System.Guid UserId { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Image> Images { get; set; }
-        public virtual Account Accounts { get; set; }
+      this.Images = new HashSet<Image>();
     }
+
+    public System.Guid Id { get; set; }
+    public string Title { get; set; }
+    public Nullable<System.DateTime> Date { get; set; }
+    public string Summary { get; set; }
+    public string Content { get; set; }
+    public Nullable<bool> IsLead { get; set; }
+    public System.Guid UserId { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    [JsonIgnore]
+    public virtual ICollection<Image> Images { get; set; }
+    [JsonIgnore]
+    public virtual Account Accounts { get; set; }
+  }
 }

@@ -1,4 +1,5 @@
-﻿using Service.Models;
+﻿using Newtonsoft.Json;
+using Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -26,6 +27,18 @@ namespace WAF_Bead_bg5q8g.Controllers
     {
       ViewBag.Lead = mEntities.Articles.Where(article => (bool)article.IsLead).FirstOrDefault();
       return View("Index", mEntities.Articles.OrderBy(article => article.Date).Take(10).ToList());
+    }
+
+    public ActionResult Articles()
+    {
+      
+      var wSerializedData = JsonConvert.SerializeObject(mEntities.Articles.OrderBy(article => article.Date).ToList());
+      return new JsonResult
+      {
+        RecursionLimit = 1,
+        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+        Data = wSerializedData
+      };
     }
 
     public ActionResult Archive()
@@ -92,7 +105,7 @@ namespace WAF_Bead_bg5q8g.Controllers
       Byte[] wImageContent = mEntities.Images.Where(image => image.Id == Id).Select(image => image.Image1).FirstOrDefault();
 
       if (wImageContent == null) { return File(Stream.Null, "image/jpg"); }
-      
+
       return File(wImageContent, "image/jpg");
     }
   }

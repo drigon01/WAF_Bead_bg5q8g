@@ -1,8 +1,10 @@
-﻿using Service.Models;
+﻿using Newtonsoft.Json;
+using Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+
 
 using System.Threading.Tasks;
 
@@ -22,7 +24,7 @@ namespace Admin.presistence
     {
       try
       {
-        HttpResponseMessage response = await mClient.PostAsJsonAsync("api/articles/", article); // az értékeket azonnal JSON formátumra alakítjuk
+        HttpResponseMessage response = await mClient.PostAsJsonAsync("/articles/", article); // az értékeket azonnal JSON formátumra alakítjuk
         article.Id = (await response.Content.ReadAsAsync<Article>()).Id; // a válaszüzenetben megkapjuk a végleges azonosítót
         return response.IsSuccessStatusCode;
       }
@@ -36,7 +38,7 @@ namespace Admin.presistence
     {
       try
       {
-        HttpResponseMessage wResponse = await mClient.PostAsJsonAsync("api/images/", image); // elküldjük a képet
+        HttpResponseMessage wResponse = await mClient.PostAsJsonAsync("/images/", image); // elküldjük a képet
         if (wResponse.IsSuccessStatusCode)
         {
           image.Id = await wResponse.Content.ReadAsAsync<Guid>(); // a válaszüzenetben megkapjuk az azonosítót
@@ -53,7 +55,7 @@ namespace Admin.presistence
     {
       try
       {
-        HttpResponseMessage response = await mClient.DeleteAsync("api/buildings/" + article.Id);
+        HttpResponseMessage response = await mClient.DeleteAsync("/buildings/" + article.Id);
         return response.IsSuccessStatusCode;
       }
       catch (Exception ex)
@@ -66,7 +68,13 @@ namespace Admin.presistence
     {
       try
       {
-        HttpResponseMessage wResponse = await mClient.GetAsync("api/account/login/" + userName + "/" + userPassword);
+        var wFormContent = new FormUrlEncodedContent(new[]
+        {
+          new KeyValuePair<string, string>("User", userName),
+          new KeyValuePair<string, string>("Password", userPassword)
+        });
+
+        HttpResponseMessage wResponse = await mClient.PostAsync("/account/login?returnUrl=index", wFormContent);
         return wResponse.IsSuccessStatusCode; // a művelet eredménye megadja a bejelentkezés sikeressségét
       }
       catch (Exception ex)
@@ -79,7 +87,7 @@ namespace Admin.presistence
     {
       try
       {
-        HttpResponseMessage wResponse = await mClient.GetAsync("api/account/logout");
+        HttpResponseMessage wResponse = await mClient.GetAsync("/account/logout");
         return !wResponse.IsSuccessStatusCode;
       }
       catch (Exception ex)
@@ -93,23 +101,24 @@ namespace Admin.presistence
       try
       {
         // a kéréseket a kliensen keresztül végezzük
-        HttpResponseMessage wResponse = await mClient.GetAsync("api/buildings/");
+        HttpResponseMessage wResponse = await mClient.GetAsync("/home/articles");
         if (wResponse.IsSuccessStatusCode) // amennyiben sikeres a művelet
         {
-          IEnumerable<Article> wArticles = await wResponse.Content.ReadAsAsync<IEnumerable<Article>>();
+          var wRawData = (await wResponse.Content.ReadAsStringAsync()).ToString().Replace('\\', ' ').Trim('\"').ToString();
+          var wArticles = JsonConvert.DeserializeObject<IEnumerable<Article>>(wRawData);
           // a tartalmat JSON formátumból objektumokká alakítjuk
 
           // képek lekérdezése:
           foreach (Article wArticle in wArticles)
           {
-            wResponse = await mClient.GetAsync("api/images/articles/" + wArticle.Id);
+            wResponse = await mClient.GetAsync("home/Galery/" + wArticle.Id);
             if (wResponse.IsSuccessStatusCode)
             {
               wArticle.Images = (await wResponse.Content.ReadAsAsync<IEnumerable<Image>>()).ToList();
             }
           }
 
-          return wArticles;
+          return wArticles as IEnumerable<Article>;
         }
         else
         {
@@ -132,7 +141,7 @@ namespace Admin.presistence
     {
       try
       {
-        HttpResponseMessage wResponse = await mClient.PutAsJsonAsync("api/article/", article);
+        HttpResponseMessage wResponse = await mClient.PutAsJsonAsync("/article/", article);
         return wResponse.IsSuccessStatusCode;
       }
       catch (Exception ex)

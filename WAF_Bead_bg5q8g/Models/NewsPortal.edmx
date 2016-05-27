@@ -75,7 +75,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="News_PortalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Article">
+        <EntityType Name="Article" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -108,7 +108,7 @@
           <NavigationProperty Name="Articles" Relationship="News_PortalModel.UserArticle" FromRole="User" ToRole="Article" />
         </EntityType>
         <EntityContainer Name="News_PortalEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Articles" EntityType="Self.Article" />
+          <EntitySet Name="Articles" EntityType="Self.Article" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="Accounts" EntityType="News_PortalModel.Account" />
           <AssociationSet Name="ArticleImage" Association="News_PortalModel.ArticleImage">

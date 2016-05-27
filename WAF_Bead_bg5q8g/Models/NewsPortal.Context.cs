@@ -18,6 +18,7 @@ namespace Service.Models
         public News_PortalEntities()
             : base("name=News_PortalEntities")
         {
+            Articles = Set<Article>();
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -25,7 +26,7 @@ namespace Service.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Article> Articles { get; set; }
+        internal virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
     }

@@ -88,8 +88,7 @@ namespace Admin.ViewModel
     /// </summary>
     private void OnLoginSuccess()
     {
-      if (LoginSuccess != null)
-        LoginSuccess(this, EventArgs.Empty);
+      LoginSuccess?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
