@@ -20,9 +20,9 @@
       <RowDefinition Height="35" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="307" />
-      <ColumnDefinition Width="93"/>
-      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="261" />
+      <ColumnDefinition Width="212"/>
+      <ColumnDefinition />
     </Grid.ColumnDefinitions>
 
     <Menu Grid.Row="0" Grid.ColumnSpan="3">
@@ -38,9 +38,9 @@
       <!-- adatrács, amelynek megadjuk az oszlopait -->
       <DataGrid.Columns>
         <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
-        <DataGridTextColumn Header="Summary" Binding="{Binding City}"  />
+        <DataGridTextColumn Header="Summary" Binding="{Binding Summary}"  />
         <DataGridTextColumn Header="Content" Binding="{Binding Content}" />
-        <DataGridCheckBoxColumn Header="IsLead" Binding="{Binding IsLead}" />
+        <DataGridCheckBoxColumn Header="IsLead" Binding="{Binding IsLead.Value}" />
       </DataGrid.Columns>
     </DataGrid>
 

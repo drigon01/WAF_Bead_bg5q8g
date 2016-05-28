@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Service.Models;
 using System;
 using System.Collections.Generic;
@@ -104,7 +105,7 @@ namespace Admin.presistence
         HttpResponseMessage wResponse = await mClient.GetAsync("/home/articles");
         if (wResponse.IsSuccessStatusCode) // amennyiben sikeres a művelet
         {
-          var wRawData = (await wResponse.Content.ReadAsStringAsync()).ToString().Replace('\\', ' ').Trim('\"').ToString();
+          var wRawData = (await wResponse.Content.ReadAsStringAsync()).ToString().Replace("\\", "").Trim('\"').ToString();
           var wArticles = JsonConvert.DeserializeObject<IEnumerable<Article>>(wRawData);
           // a tartalmat JSON formátumból objektumokká alakítjuk
 
@@ -140,8 +141,8 @@ namespace Admin.presistence
     public async Task<bool> UpdateArticleAsync(Article article)
     {
       try
-      {
-        HttpResponseMessage wResponse = await mClient.PutAsJsonAsync("/article/", article);
+      {        
+        HttpResponseMessage wResponse = await mClient.PutAsJsonAsync("home/article", article);
         return wResponse.IsSuccessStatusCode;
       }
       catch (Exception ex)

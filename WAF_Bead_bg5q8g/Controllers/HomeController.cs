@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -31,7 +32,7 @@ namespace WAF_Bead_bg5q8g.Controllers
 
     public ActionResult Articles()
     {
-      
+
       var wSerializedData = JsonConvert.SerializeObject(mEntities.Articles.OrderBy(article => article.Date).ToList());
       return new JsonResult
       {
@@ -71,6 +72,38 @@ namespace WAF_Bead_bg5q8g.Controllers
       var wArticle = mEntities.Articles.Where(article => article.Id == articleId).FirstOrDefault();
       ViewBag.ArticleImageId = mEntities.Images.Where(image => image.News_Id == articleId).Select(image => image.Id).ToList().FirstOrDefault();
       return View("Article", wArticle);
+    }
+
+    [HttpPut]
+    public ActionResult Article()
+    {
+      Stream wRequestStream = Request.InputStream;
+      wRequestStream.Seek(0, SeekOrigin.Begin);
+      string wJson = new StreamReader(wRequestStream).ReadToEnd();
+
+      Article wArticle = null;
+      try
+      {
+        wArticle = JsonConvert.DeserializeObject<Article>(wJson);
+      }
+      catch (Exception ex)
+      {
+        return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
+      }
+
+      Article wArticleToUpdate = mEntities.Articles.FirstOrDefault(article => article.Id == wArticle.Id);
+
+      if (wArticleToUpdate == null) // ha nincs ilyen azonosító, akkor hibajelzést küldünk
+        return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "not found article on server");
+
+      wArticleToUpdate.Content = wArticle.Content;
+      wArticleToUpdate.Summary = wArticle.Summary;
+      wArticleToUpdate.Title = wArticle.Title;
+      wArticleToUpdate.IsLead = wArticle.IsLead;
+      wArticleToUpdate.Images = wArticle.Images;
+
+      mEntities.SaveChanges();
+      return null;
     }
 
     public ActionResult Galery(Guid articleId, int step)

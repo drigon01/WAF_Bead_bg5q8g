@@ -21,20 +21,23 @@
 
     <StackPanel Grid.Row="0" Orientation="Horizontal">
       <TextBlock Text="Title:" Margin="5" />
-      <TextBox Width="456" Text="{Binding EditedArticle.Name}" Margin="5"/>
+      <TextBox Width="456" Text="{Binding EditedArticle.Title}" Margin="5"/>
     </StackPanel>
     <StackPanel Grid.Row="1" Orientation="Horizontal">
       <TextBlock Text="Summary:" Margin="5" />
-      <TextBox Width="429" Text="{Binding EditedArticle.SeaDistance}" Margin="5"/>
+      <TextBox Width="429" Text="{Binding EditedArticle.Summary}" Margin="5"/>
     </StackPanel>
     <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2"/>
     <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="0,5,0,28">
-      <CheckBox x:Name="IsLead" Content="IsLead?" Width="111" Margin="0,0,0,141"/>
+      <CheckBox x:Name="IsLead" Content="IsLead?" Width="111" Margin="0,0,0,141" IsChecked="{Binding EditedArticle.IsLead.Value}"/>
     </StackPanel>
     <StackPanel Grid.Row="4" Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="217">
       <Button Content="Mégse" Margin="5,5,6,5" Command="{Binding CancelChangesCommand}" Width="100" />
       <Button Content="Mentés" Margin="6,5,0,5" Command="{Binding SaveChangesCommand}" Width="100" />
     </StackPanel>
-    <TextBlock x:Name="ArticleContent" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="3" TextWrapping="Wrap" Text="type the article here" VerticalAlignment="Top" Height="108" Width="493" Background="#FFC3C3C3"/>
+    <TextBox x:Name="ArticleContent" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="3" 
+             TextWrapping="Wrap" Text="{Binding EditedArticle.Content}" VerticalAlignment="Top" 
+             Height="108" Width="493" Background="#FFC3C3C3"
+             AcceptsReturn="True"/>
   </Grid>
 </Window>
