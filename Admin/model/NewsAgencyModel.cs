@@ -80,8 +80,6 @@ namespace Admin.model
         mArticleFlags.Remove(article);
       else
         mArticleFlags[article] = DataFlag.Delete;
-
-      mArticleFlags.Remove(article);
     }
 
     public async Task LoadAsync()

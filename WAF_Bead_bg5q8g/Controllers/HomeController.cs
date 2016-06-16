@@ -2,6 +2,8 @@
 using Service.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -32,7 +34,6 @@ namespace WAF_Bead_bg5q8g.Controllers
 
     public ActionResult Articles()
     {
-
       var wSerializedData = JsonConvert.SerializeObject(mEntities.Articles.OrderBy(article => article.Date).ToList());
       return new JsonResult
       {
@@ -57,7 +58,7 @@ namespace WAF_Bead_bg5q8g.Controllers
       mArchiveStart = (step * 20);
       mGaleryPosition = 0;
       ViewBag.Message = "Here You may Browse the archived Articles";
-      return View("Archive", mEntities.Articles.OrderBy(article => article.Date).Skip(10 + mArchiveStart).Take(20).ToList());
+      return View("Archive", mEntities.Articles.OrderBy(article => article.Date).Skip(10 + mArchiveStart).ToList().Take(20).ToList());
     }
 
     public ActionResult Contact()
@@ -71,6 +72,7 @@ namespace WAF_Bead_bg5q8g.Controllers
       mGaleryPosition = 0;
       var wArticle = mEntities.Articles.Where(article => article.Id == articleId).FirstOrDefault();
       ViewBag.ArticleImageId = mEntities.Images.Where(image => image.News_Id == articleId).Select(image => image.Id).ToList().FirstOrDefault();
+      if (!wArticle.Date.HasValue) { wArticle.Date = DateTime.Now; }
       return View("Article", wArticle);
     }
 
@@ -93,16 +95,46 @@ namespace WAF_Bead_bg5q8g.Controllers
 
       Article wArticleToUpdate = mEntities.Articles.FirstOrDefault(article => article.Id == wArticle.Id);
 
-      if (wArticleToUpdate == null) // ha nincs ilyen azonosító, akkor hibajelzést küldünk
-        return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "not found article on server");
+      if (wArticleToUpdate == null)
+      {
+        var wNewArticle = new Article();
+        wNewArticle.Accounts = wNewArticle.Accounts ?? new Account { Id = Guid.NewGuid() };
+        wNewArticle.Date = DateTime.Now;
+        wNewArticle.Images = ((new Queue<Service.Models.Image>()) as ICollection<Service.Models.Image>);
+        wNewArticle.Id = Guid.NewGuid();
+        mEntities.Articles.Add(wNewArticle);
+        wArticleToUpdate = wNewArticle;
+      }
 
-      wArticleToUpdate.Content = wArticle.Content;
-      wArticleToUpdate.Summary = wArticle.Summary;
-      wArticleToUpdate.Title = wArticle.Title;
-      wArticleToUpdate.IsLead = wArticle.IsLead;
-      wArticleToUpdate.Images = wArticle.Images;
+      wArticleToUpdate.Content = wArticle.Content.Substring(0, Math.Min(wArticle.Content.Length, 499));
+      wArticleToUpdate.Summary = wArticle.Summary.Substring(0, Math.Min(wArticle.Summary.Length, 99));
+      wArticleToUpdate.Title = wArticle.Title.Substring(0, Math.Min(wArticle.Title.Length, 99));
+      wArticleToUpdate.IsLead = (bool)wArticle.IsLead;
 
-      mEntities.SaveChanges();
+      wArticleToUpdate.Summary.Replace(" ", "");
+
+      wArticleToUpdate.Images = (ICollection<Service.Models.Image>)wArticle.Images;
+
+      try
+      {
+        mEntities.SaveChanges();
+      }
+      catch (DbEntityValidationException dbEx)
+      {
+        foreach (var validationErrors in dbEx.EntityValidationErrors)
+        {
+          foreach (var validationError in validationErrors.ValidationErrors)
+          {
+            Trace.TraceInformation("Property: {0} Error: {1}",
+                                    validationError.PropertyName,
+                                    validationError.ErrorMessage);
+          }
+        }
+      }
+      catch (Exception wE)
+      {
+        Debugger.Log(1, "error", wE.Message);
+      }
       return null;
     }
 
@@ -113,6 +145,38 @@ namespace WAF_Bead_bg5q8g.Controllers
       mGaleryPosition += (mGaleryPosition + step) < 0 ? wIamges.Count : step;
 
       return View("Galery", wIamges[mGaleryPosition]);
+    }
+    [HttpPut]
+    public ActionResult CreateImage()
+    {
+      Stream wRequestStream = Request.InputStream;
+      wRequestStream.Seek(0, SeekOrigin.Begin);
+      string wJson = new StreamReader(wRequestStream).ReadToEnd();
+
+      Service.Models.Image wImage = null;
+      try
+      {
+        wImage = JsonConvert.DeserializeObject<Service.Models.Image>(wJson);
+      }
+      catch (Exception ex)
+      {
+        return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
+      }
+
+      if (wImage != null && wImage.Image1 != null)
+      {
+        var wArticle = mEntities.Articles.FirstOrDefault(a => a.Id == wImage.News_Id);
+        wImage.Article = wArticle;
+        wArticle.Images.Add(wImage);
+        mEntities.Images.Add(wImage);
+
+      }
+
+      mEntities.SaveChanges();
+
+      var wJsonresult = new JsonResult();
+      wJsonresult.Data = wImage.Id;
+      return wJsonresult;
     }
 
     [HttpPost]
@@ -140,6 +204,16 @@ namespace WAF_Bead_bg5q8g.Controllers
       if (wImageContent == null) { return File(Stream.Null, "image/jpg"); }
 
       return File(wImageContent, "image/jpg");
+    }
+
+    [HttpDelete]
+    public ActionResult Article(string id)
+    {
+      var wId = Guid.Parse(id);
+
+      mEntities.Articles.Remove(mEntities.Articles.FirstOrDefault(article => article.Id == wId));
+      mEntities.SaveChanges();
+      return null;
     }
   }
 }

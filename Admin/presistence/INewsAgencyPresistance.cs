@@ -9,15 +9,11 @@ namespace Admin.presistence
   {
     Task<IEnumerable<Article>> ReadAriclesAsync();
 
-    Task<IEnumerable<Image>> ReadImagesAsync();
-
     Task<Boolean> CreateArticleAsync(Article article);
 
     Task<Boolean> UpdateArticleAsync(Article article);
 
     Task<Boolean> DeleteArticleAsync(Article article);
-
-    Task<Boolean> CreateArticleImageAsync(Image image);
 
     Task<Boolean> LoginAsync(String userName, String userPassword);
 

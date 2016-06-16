@@ -23,15 +23,19 @@ namespace Admin.presistence
 
     public async Task<bool> CreateArticleAsync(Article article)
     {
+      return await UpdateArticleAsync(article);
+    }
+
+    public async Task<bool> UpdateArticleAsync(Article article)
+    {
       try
       {
-        HttpResponseMessage response = await mClient.PostAsJsonAsync("/articles/", article); // az értékeket azonnal JSON formátumra alakítjuk
-        article.Id = (await response.Content.ReadAsAsync<Article>()).Id; // a válaszüzenetben megkapjuk a végleges azonosítót
-        return response.IsSuccessStatusCode;
+        HttpResponseMessage wResponse = await mClient.PutAsJsonAsync("home/article", article);
+        return wResponse.IsSuccessStatusCode;
       }
       catch (Exception ex)
       {
-        throw new Exception("error wile creating article", ex);
+        throw new Exception("error while updating article", ex);
       }
     }
 
@@ -39,7 +43,7 @@ namespace Admin.presistence
     {
       try
       {
-        HttpResponseMessage wResponse = await mClient.PostAsJsonAsync("/images/", image); // elküldjük a képet
+        HttpResponseMessage wResponse = await mClient.PutAsJsonAsync("home/CreateImage/", image); // elküldjük a képet
         if (wResponse.IsSuccessStatusCode)
         {
           image.Id = await wResponse.Content.ReadAsAsync<Guid>(); // a válaszüzenetben megkapjuk az azonosítót
@@ -56,7 +60,7 @@ namespace Admin.presistence
     {
       try
       {
-        HttpResponseMessage response = await mClient.DeleteAsync("/buildings/" + article.Id);
+        HttpResponseMessage response = await mClient.DeleteAsync("home/article/"+article.Id);
         return response.IsSuccessStatusCode;
       }
       catch (Exception ex)
@@ -136,19 +140,6 @@ namespace Admin.presistence
     public Task<IEnumerable<Image>> ReadImagesAsync()
     {
       throw new NotImplementedException();
-    }
-
-    public async Task<bool> UpdateArticleAsync(Article article)
-    {
-      try
-      {        
-        HttpResponseMessage wResponse = await mClient.PutAsJsonAsync("home/article", article);
-        return wResponse.IsSuccessStatusCode;
-      }
-      catch (Exception ex)
-      {
-        throw new Exception("error while updating article", ex);
-      }
     }
   }
 }

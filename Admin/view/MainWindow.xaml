@@ -60,7 +60,7 @@
       </ListBox.ItemsPanel>
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <Image Height="100" Width="Auto" Source="{Binding Image, Converter={StaticResource ImageConverter}}" />
+          <Image Height="100" Width="Auto" Source="{Binding Image1, Converter={StaticResource ImageConverter}}" />
           <!-- képmegjelenítőt használunk konverzióval -->
         </DataTemplate>
       </ListBox.ItemTemplate>
