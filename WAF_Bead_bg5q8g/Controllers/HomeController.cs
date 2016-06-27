@@ -49,7 +49,7 @@ namespace WAF_Bead_bg5q8g.Controllers
       mGaleryPosition = 0;
       ViewBag.Message = "Here You may Browse the archived Articles";
       var wArchivedArticles = mEntities.Articles.OrderBy(article => article.Date).Skip(10).ToList();
-      ViewBag.ArchiveLength = wArchivedArticles.Count / 20;
+      ViewBag.ArchiveLength = ((wArchivedArticles.Count / 20) + (wArchivedArticles.Count % 20 == 0 ? 0 : 1));
       return View("Archive", wArchivedArticles.Take(20).ToList());
     }
 
@@ -57,6 +57,8 @@ namespace WAF_Bead_bg5q8g.Controllers
     {
       mArchiveStart = (step * 20);
       mGaleryPosition = 0;
+      var wArchivedArticles = mEntities.Articles.OrderBy(article => article.Date).Skip(10).ToList();
+      ViewBag.ArchiveLength = ((wArchivedArticles.Count / 20) + (wArchivedArticles.Count % 20 == 0 ? 0 : 1));
       ViewBag.Message = "Here You may Browse the archived Articles";
       return View("Archive", mEntities.Articles.OrderBy(article => article.Date).Skip(10 + mArchiveStart).ToList().Take(20).ToList());
     }

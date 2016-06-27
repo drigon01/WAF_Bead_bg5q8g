@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using WAF_Bead_bg5q8g.Models;
 using Service.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Net;
 
 namespace WAF_Bead_bg5q8g.Controllers
 {
@@ -91,6 +92,7 @@ namespace WAF_Bead_bg5q8g.Controllers
         case SignInStatus.Failure:
         default:
           ModelState.AddModelError("", "Invalid login attempt.");
+          HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
           return View(model);
       }
     }
