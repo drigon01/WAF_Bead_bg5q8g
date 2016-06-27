@@ -15,16 +15,16 @@
 
 
 <div>
-  @if (ViewBag.Images != null && ViewBag.Images.Count > 0)
+  @if (ViewBag.ArticleImageId != null && ViewBag.ArticleImageId != Guid.Empty)
   {
     Guid wId = ViewBag.ArticleImageId;  // a képek azonosítóit a nézet adataihoz töltöttük be
-    var wImage = Url.Action("ArticleImage", new { Id = wId });
+    var wImage = Url.Action("ArticleImage", "Home", new { Id = wId });
 
     <div class="jumbotron">
       <strong>Images</strong><br />
-      <a href="@Url.Action("ArticleImage","Galery", new { Id = Model.Id ,index = 1})">
+      <a href="@Url.Action("Galery","Home", new { articleId = Model.Id , step= 0})">
         @* képként betöltjük a kis méretű képet, a galeriara pedig elhelyezünk egy hivatkozást *@
-        <img src="@Url.Action("ArticleImage", new { Id = wId })" class="img-thumbnail" />
+        <img src="@Url.Action("ArticleImage","Home", new { Id = wId })" class="img-thumbnail" />
       </a>
 
     </div>
@@ -32,4 +32,4 @@
 </div>
 
 <cite>~ Edited: @Model.Date.Value.ToLongTimeString() </cite>
-  <cite>~   Author: @(string.IsNullOrWhiteSpace(@Model.Accounts.name) ? "Unkown" : @Model.Accounts.name) ~</cite>
+<cite>~   Author: @(string.IsNullOrWhiteSpace(@Model.Accounts.name) ? "Unkown" : @Model.Accounts.name) ~</cite>

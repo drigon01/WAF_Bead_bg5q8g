@@ -17,7 +17,7 @@ namespace WAF_Bead_bg5q8g.Controllers
   {
     private News_PortalEntities mEntities;
     private int mArchiveStart = 0;
-    private int mGaleryPosition = 0;
+    private static int mGaleryPosition = 0;
 
 
     public HomeController()
@@ -100,7 +100,7 @@ namespace WAF_Bead_bg5q8g.Controllers
         var wNewArticle = new Article();
         wNewArticle.Accounts = wNewArticle.Accounts ?? new Account { Id = Guid.NewGuid() };
         wNewArticle.Date = DateTime.Now;
-        wNewArticle.Images = ((new Queue<Service.Models.Image>()) as ICollection<Service.Models.Image>);
+        wNewArticle.Images = new List<Service.Models.Image>();
         wNewArticle.Id = Guid.NewGuid();
         mEntities.Articles.Add(wNewArticle);
         wArticleToUpdate = wNewArticle;
@@ -113,7 +113,7 @@ namespace WAF_Bead_bg5q8g.Controllers
 
       wArticleToUpdate.Summary.Replace(" ", "");
 
-      wArticleToUpdate.Images = (ICollection<Service.Models.Image>)wArticle.Images;
+      wArticleToUpdate.Images = (IList<Service.Models.Image>)wArticle.Images;
 
       try
       {
@@ -140,11 +140,14 @@ namespace WAF_Bead_bg5q8g.Controllers
 
     public ActionResult Galery(Guid articleId, int step)
     {
+      ViewBag.articleId = articleId;
       var wIamges = mEntities.Images.Where(image => image.News_Id == articleId).ToList();
 
-      mGaleryPosition += (mGaleryPosition + step) < 0 ? wIamges.Count : step;
+      mGaleryPosition += ((mGaleryPosition + step) < 0 ? wIamges.Count - 1 : step);
 
-      return View("Galery", wIamges[mGaleryPosition]);
+      ViewBag.EnlargedIndex = mGaleryPosition;
+
+      return View("Galery", wIamges);
     }
     [HttpPut]
     public ActionResult CreateImage()
@@ -169,7 +172,6 @@ namespace WAF_Bead_bg5q8g.Controllers
         wImage.Article = wArticle;
         wArticle.Images.Add(wImage);
         mEntities.Images.Add(wImage);
-
       }
 
       mEntities.SaveChanges();

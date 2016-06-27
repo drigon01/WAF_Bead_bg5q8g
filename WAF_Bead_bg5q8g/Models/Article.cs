@@ -18,7 +18,7 @@ namespace Service.Models
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
     public Article()
     {
-      this.Images = new HashSet<Image>();
+      this.Images = new List<Image>();
     }
 
     public System.Guid Id { get; set; }
@@ -31,7 +31,7 @@ namespace Service.Models
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     [JsonIgnore]
-    public virtual ICollection<Image> Images { get; set; }
+    public virtual IList<Image> Images { get; set; }
     [JsonIgnore]
     public virtual Account Accounts { get; set; }
   }

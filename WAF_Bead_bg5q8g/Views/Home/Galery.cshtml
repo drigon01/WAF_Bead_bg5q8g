@@ -5,7 +5,7 @@
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model Image
+@model IList<Image>
 
 
 <h2>Galery</h2>
@@ -13,18 +13,23 @@
 <div>
   @if (Model != null)
   {
+    var wLength = Model.Count;
     <div class="jumbotron">
       <strong>Images:</strong><br />
-
-      <img src="@Model.Image1" />
-
+      @for (var wIndex = 0; wIndex < wLength; wIndex++)
+      {
+        <img src="@Url.Action("ArticleImage", "Home", new { Id = Model[wIndex].Id })" class="img-thumbnail" />
+      }
     </div>
-
+    <div>
+      <img src="@Url.Action("ArticleImage", "Home", new { Id = Model[ViewBag.EnlargedIndex].Id })" />
+    </div>
+  }
+  @if (Model.Count > 1)
+  {
     <div class="col-md-4">
-      @Html.ActionLink("Next", "Galery", new { step = 1 });
-
-      @Html.ActionLink("Previous", "Galery", new { step = -1 });
-
+      @Html.ActionLink("Previous", "Galery", new { articleId = ViewBag.articleId, step = -1 });
+      @Html.ActionLink("Next", "Galery", new { articleId = ViewBag.articleId, step = 1 });
     </div>
   }
 </div>

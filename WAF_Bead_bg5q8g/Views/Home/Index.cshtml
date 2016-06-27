@@ -18,9 +18,13 @@ else
       <h2>@ViewBag.Lead.Summary</h2>
       <p class="lead">@ViewBag.Lead.Content</p>
       <div>
-        <img src="@Url.Action("ArticleImage", new { Id = ViewBag.Lead.Id })" border="0" class="img-thumbnail" />
-      </div>}
-  </div>
+        <a href="@Url.Action("Galery","Home", new { articleId = ViewBag.Lead.Id , step= 0})">
+          @* képként betöltjük a kis méretű képet, a galeriara pedig elhelyezünk egy hivatkozást *@
+          <img src="@Url.Action("ArticleImage","Home", new { Id = ViewBag.Lead.Images[0].Id })" class="img-thumbnail" />
+        </a>
+      </div>
+    }
+    </div>
   <div class="row">
     @for (var wIndex = 0; wIndex < Model.Count && wIndex < 10; wIndex++)
     {
