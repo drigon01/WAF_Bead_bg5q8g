@@ -14,27 +14,26 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="25" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="35" />
-      <RowDefinition Height="110" />
-      <RowDefinition Height="35" />
+      <RowDefinition />
+      <RowDefinition Height="0" />
+      <RowDefinition Height="2" />
+      <RowDefinition Height="36" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="261" />
-      <ColumnDefinition Width="212"/>
+      <ColumnDefinition Width="173.632" />
+      <ColumnDefinition Width="87.368"/>
+      <ColumnDefinition Width="213"/>
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
 
-    <Menu Grid.Row="0" Grid.ColumnSpan="3">
-      <MenuItem Header="Adatbázis">
-        <MenuItem Header="Cikkek Lekérdezése" Command="{Binding LoadCommand}"/>
-        <MenuItem Header="Cikkek mentése" Command="{Binding SaveCommand}" IsEnabled="{Binding IsLoaded}"/>
-        <Separator />
-        <MenuItem Header="Kilépés" Command="{Binding ExitCommand}" />
-      </MenuItem>
+    <Menu Grid.Row="0" Grid.ColumnSpan="4">
+      <MenuItem Header="Cikkek Lekérdezése" Command="{Binding LoadCommand}"/>
+      <MenuItem Header="Cikkek mentése" Command="{Binding SaveCommand}" IsEnabled="{Binding IsLoaded}"/>
+      <Separator />
+      <MenuItem Header="Kilépés" Command="{Binding ExitCommand}" />
     </Menu>
 
-    <DataGrid Name="ArticleGrid" Grid.Row="1" Grid.ColumnSpan="3" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}">
+    <DataGrid Name="ArticleGrid" Grid.Row="1" Grid.ColumnSpan="4" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}">
       <!-- adatrács, amelynek megadjuk az oszlopait -->
       <DataGrid.Columns>
         <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
@@ -44,13 +43,13 @@
       </DataGrid.Columns>
     </DataGrid>
 
-    <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2">
-      <Button Content="New" Margin="6,5,0,5" Command="{Binding CreateArticleCommand}" Width="114" IsEnabled="{Binding IsLoaded}" />
-      <Button Content="Update" Margin="6,5,0,5" Command="{Binding UpdateArticleCommand}" CommandParameter="{Binding SelectedArticle}" Width="114" IsEnabled="{Binding IsLoaded}" />
-      <Button Content="Delete" Margin="6,5,6,5" Command="{Binding DeleteArticleCommand}" CommandParameter="{Binding SelectedArticle}" Width="114" IsEnabled="{Binding IsLoaded}" />
+    <StackPanel Grid.Row="4" Orientation="Horizontal" Grid.ColumnSpan="4" Margin="129,0,40,0">
+      <Button Content="New" Margin="6,5,0,5" Command="{Binding CreateArticleCommand}" Width="85" IsEnabled="{Binding IsLoaded}" />
+      <Button Content="Update" Margin="6,5,0,5" Command="{Binding UpdateArticleCommand}" CommandParameter="{Binding SelectedArticle}" Width="82" IsEnabled="{Binding IsLoaded}" />
+      <Button Content="Delete" Margin="6,5,6,5" Command="{Binding DeleteArticleCommand}" CommandParameter="{Binding SelectedArticle}" Width="82" IsEnabled="{Binding IsLoaded}" />
     </StackPanel>
 
-    <ListBox Grid.Row="3" Grid.ColumnSpan="3" Name="imageListBox" ItemsSource="{Binding ElementName=ArticleGrid, Path=SelectedItem.Images}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+    <ListBox Grid.Row="1" Name="imageListBox" ItemsSource="{Binding ElementName=ArticleGrid, Path=SelectedItem.Images}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="3" Grid.RowSpan="4">
       <!-- az épülethez tartozó képeket egy listba helyezzük, amely vízszintesen görgethető -->
       <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
@@ -66,7 +65,7 @@
       </ListBox.ItemTemplate>
     </ListBox>
 
-    <Grid Grid.Row="4" Grid.ColumnSpan="3">
+    <Grid Grid.Row="4" Grid.ColumnSpan="3" Margin="0,0,10,0">
       <Button Content="Új kép hozzáadása" Margin="6,5,0,5" Command="{Binding CreateImageCommand}" CommandParameter="{Binding SelectedArticle}" HorizontalAlignment="Left" Width="120" IsEnabled="{Binding IsLoaded}" />
     </Grid>
   </Grid>
