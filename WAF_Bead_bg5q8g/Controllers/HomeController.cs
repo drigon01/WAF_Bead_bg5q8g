@@ -148,9 +148,22 @@ namespace WAF_Bead_bg5q8g.Controllers
       mGaleryPosition += ((mGaleryPosition + step) < 0 ? wIamges.Count - 1 : step);
 
       ViewBag.EnlargedIndex = mGaleryPosition;
-
+      
       return View("Galery", wIamges);
     }
+
+    public ActionResult GetGalery(Guid articleId)
+    {
+      var wSerializedData = JsonConvert.SerializeObject(mEntities.Images.Where(image=>image.News_Id==articleId).ToList());
+      return new JsonResult
+      {
+        RecursionLimit = 1,
+        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+        Data = wSerializedData
+      };
+    }
+
+
     [HttpPut]
     public ActionResult CreateImage()
     {

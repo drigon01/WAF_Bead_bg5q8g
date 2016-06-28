@@ -60,7 +60,7 @@ namespace Admin.presistence
     {
       try
       {
-        HttpResponseMessage response = await mClient.DeleteAsync("home/article/"+article.Id);
+        HttpResponseMessage response = await mClient.DeleteAsync("home/article/" + article.Id);
         return response.IsSuccessStatusCode;
       }
       catch (Exception ex)
@@ -116,13 +116,14 @@ namespace Admin.presistence
           // képek lekérdezése:
           foreach (Article wArticle in wArticles)
           {
-            wResponse = await mClient.GetAsync("home/Galery/" + wArticle.Id);
+
+            wResponse = await mClient.GetAsync(string.Format("home/GetGalery?articleId={0}", wArticle.Id));
             if (wResponse.IsSuccessStatusCode)
             {
-              wArticle.Images = (await wResponse.Content.ReadAsAsync<IEnumerable<Image>>()).ToList();
+              wRawData = (await wResponse.Content.ReadAsStringAsync()).ToString().Replace("\\", "").Trim('\"').ToString();
+              wArticle.Images = JsonConvert.DeserializeObject<IList<Image>>(wRawData);
             }
           }
-
           return wArticles as IEnumerable<Article>;
         }
         else

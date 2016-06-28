@@ -192,7 +192,7 @@ namespace Admin.ViewModel
       try
       {
         await mModel.LoadAsync();
-        Articles = new ObservableCollection<Article>(mModel.Articles); // az adatokat egy követett gyűjteménybe helyezzük
+        Articles = new ObservableCollection<Article>(mModel.Articles);
         IsLoaded = true;
       }
       catch (Exception)

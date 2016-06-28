@@ -11,14 +11,14 @@
 <h2>Galery</h2>
 
 <div>
-  @if (Model != null)
+  @if (Model != null && Model.Count > 0)
   {
     var wLength = Model.Count;
     <div class="jumbotron">
       <strong>Images:</strong><br />
       @for (var wIndex = 0; wIndex < wLength; wIndex++)
       {
-        <img src="@Url.Action("ArticleImage", "Home", new { Id = Model[wIndex].Id })" class="img-thumbnail" />
+      <img src="@Url.Action("ArticleImage", "Home", new { Id = Model[wIndex].Id })" class="img-thumbnail" />
       }
     </div>
     <div>
