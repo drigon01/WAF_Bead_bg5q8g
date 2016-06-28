@@ -20,8 +20,8 @@
       <RowDefinition Height="36" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="173.632" />
-      <ColumnDefinition Width="87.368"/>
+      <ColumnDefinition Width="153" />
+      <ColumnDefinition Width="108"/>
       <ColumnDefinition Width="213"/>
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
@@ -36,10 +36,11 @@
     <DataGrid Name="ArticleGrid" Grid.Row="1" Grid.ColumnSpan="4" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}">
       <!-- adatrács, amelynek megadjuk az oszlopait -->
       <DataGrid.Columns>
-        <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
-        <DataGridTextColumn Header="Summary" Binding="{Binding Summary}"  />
-        <DataGridTextColumn Header="Content" Binding="{Binding Content}" />
-        <DataGridCheckBoxColumn Header="IsLead" Binding="{Binding IsLead.Value}" />
+        <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="80" />
+        <DataGridTextColumn Header="Summary" Binding="{Binding Summary}"  Width="100"  />
+        <DataGridTextColumn Header="Content" Binding="{Binding Content}"  Width="200"  />
+        <DataGridCheckBoxColumn Header="IsLead" Binding="{Binding IsLead.Value}"  Width="20" />
+        <DataGridCheckBoxColumn Header="Date" Binding="{Binding Date}" />
       </DataGrid.Columns>
     </DataGrid>
 

@@ -29,7 +29,10 @@
     </StackPanel>
     <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2"/>
     <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="0,5,0,28">
-      <CheckBox x:Name="IsLead" Content="IsLead?" Width="111" Margin="0,0,0,141" IsChecked="{Binding EditedArticle.IsLead.Value}"/>
+      <CheckBox x:Name="IsLead" Content="IsLead?" Width="111" Margin="0,0,0,141" 
+                IsChecked="{Binding EditedArticle.IsLead.Value}" 
+                Command="{Binding CreateImageCommand}"
+                CommandParameter="{Binding SelectedArticle}"/>
     </StackPanel>
     <StackPanel Grid.Row="4" Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="217">
       <Button Content="Mégse" Margin="5,5,6,5" Command="{Binding CancelChangesCommand}" Width="100" />
