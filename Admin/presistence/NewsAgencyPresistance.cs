@@ -23,7 +23,16 @@ namespace Admin.presistence
 
     public async Task<bool> CreateArticleAsync(Article article)
     {
-      return await UpdateArticleAsync(article);
+      var wResult = await UpdateArticleAsync(article);
+      if (article.Images.Count > 0)
+      {
+        foreach (var wIamge in article.Images)
+        {
+          wIamge.News_Id = article.Id;
+          wResult &= await CreateArticleImageAsync(wIamge);
+        }
+      }
+      return wResult;
     }
 
     public async Task<bool> UpdateArticleAsync(Article article)

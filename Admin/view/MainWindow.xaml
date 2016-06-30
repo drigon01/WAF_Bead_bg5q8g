@@ -21,7 +21,7 @@
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="153" />
-      <ColumnDefinition Width="108"/>
+      <ColumnDefinition Width="*"/>
       <ColumnDefinition Width="213"/>
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
@@ -33,13 +33,13 @@
       <MenuItem Header="Kilépés" Command="{Binding ExitCommand}" />
     </Menu>
 
-    <DataGrid Name="ArticleGrid" Grid.Row="1" Grid.ColumnSpan="4" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}">
+    <DataGrid Name="ArticleGrid" Grid.Row="1" Grid.ColumnSpan="3" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}" HorizontalAlignment="Stretch">
       <!-- adatrács, amelynek megadjuk az oszlopait -->
       <DataGrid.Columns>
         <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="80" />
         <DataGridTextColumn Header="Summary" Binding="{Binding Summary}"  Width="100"  />
         <DataGridTextColumn Header="Content" Binding="{Binding Content}"  Width="200"  />
-        <DataGridCheckBoxColumn Header="IsLead" Binding="{Binding IsLead.Value}"  Width="20" />
+        <DataGridCheckBoxColumn Header="IsLead" Binding="{Binding IsLead}"  Width="20" />
         <DataGridTextColumn Header="Date" Binding="{Binding Date}" />
       </DataGrid.Columns>
     </DataGrid>
@@ -50,7 +50,7 @@
       <Button Content="Delete" Margin="6,5,6,5" Command="{Binding DeleteArticleCommand}" CommandParameter="{Binding SelectedArticle}" Width="82" IsEnabled="{Binding IsLoaded}" />
     </StackPanel>
 
-    <ListBox Grid.Row="1" Name="imageListBox" ItemsSource="{Binding ElementName=ArticleGrid, Path=SelectedItem.Images}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="3" Grid.RowSpan="4">
+    <ListBox Name="imageListBox" Width="168" ItemsSource="{Binding ElementName=ArticleGrid, Path=SelectedItem.Images}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="3" Grid.RowSpan="4" Grid.Row="1">
       <!-- az épülethez tartozó képeket egy listba helyezzük, amely vízszintesen görgethető -->
       <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
