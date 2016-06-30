@@ -98,7 +98,7 @@ namespace Admin.ViewModel
         EditedArticle = new Article();
         OnArticleEditingStarted();
       });
-      CreateImageCommand = new DelegateCommand(param => OnImageAttachment((param as Article).Id));
+      CreateImageCommand = new DelegateCommand(param => { if ((param as Article) == null) { return; } OnImageAttachment((param as Article).Id); });
       UpdateArticleCommand = new DelegateCommand(param => UpdateArticle(param as Article));
       DeleteArticleCommand = new DelegateCommand(param => DeleteArticle(param as Article));
       SaveChangesCommand = new DelegateCommand(param => SaveChanges());
@@ -148,7 +148,7 @@ namespace Admin.ViewModel
     /// Változtatások mentése.
     /// </summary>
     private void SaveChanges()
-    { 
+    {
       if (String.IsNullOrEmpty(EditedArticle.Title))
       {
         OnMessageApplication("No title defined!");
@@ -171,7 +171,7 @@ namespace Admin.ViewModel
         Articles.Add(EditedArticle);
         SelectedArticle = EditedArticle;
       }
-      else 
+      else
       {
         mModel.UpdateArticle(EditedArticle);
       }

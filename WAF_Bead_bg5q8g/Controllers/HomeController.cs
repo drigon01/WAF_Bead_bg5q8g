@@ -18,8 +18,7 @@ namespace WAF_Bead_bg5q8g.Controllers
     private News_PortalEntities mEntities;
     private int mArchiveStart = 0;
     private static int mGaleryPosition = 0;
-
-
+    
     public HomeController()
     {
       mEntities = new News_PortalEntities();

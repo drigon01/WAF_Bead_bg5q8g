@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Service.Models;
+using System;
+using System.Linq;
 
 namespace WAF_Bead_bg5q8g.Models
 {

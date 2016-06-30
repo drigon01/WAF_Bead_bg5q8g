@@ -29,5 +29,10 @@ namespace Service.Models
         internal virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
+
+    public override int SaveChanges()
+    {
+      return base.SaveChanges();
     }
+  }
 }
